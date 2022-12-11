@@ -1,10 +1,12 @@
 import "flatpickr/dist/flatpickr.min.css";
 import flatpickr from "flatpickr";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const timerDate = document.querySelector('.timer [data-days]')
 const timerHours = document.querySelector('.timer [data-hours]')
 const timerMinutes = document.querySelector('.timer [data-minutes]')
 const timerSeconds = document.querySelector('.timer [data-seconds]')
+const timerStartBtn = document.querySelector('button[data-start]')
 
 const options = {
   enableTime: true,
@@ -14,23 +16,34 @@ const options = {
   onClose(selectedDates) {
     const selectedDateInMs = selectedDates[0].getTime();
     
-    const intervalId = setInterval(() => {
-      const currentDate = new Date;
-      const currentDateInMs = currentDate.getTime();
-      console.log(currentDateInMs);
-      const deltaOfDatesInMs = selectedDateInMs - currentDateInMs;
-      
-      if (deltaOfDatesInMs === 0) {
-        clearInterval(intervalId)
-      }
-      
-      const { days, hours, minutes, seconds } = convertMs(deltaOfDatesInMs);
-      
-      timerDate.textContent = days;
-      timerHours.textContent = hours;
-      timerMinutes.textContent = minutes;
-      timerSeconds.textContent = seconds;
-    }, 1000)
+    if (selectedDateInMs < options.defaultDate.getTime()) {
+      Notify.failure('Please choose a date in the future');
+      return
+    } 
+    
+    const startTimer = () => {
+      timerStartBtn.removeEventListener('click', startTimer)
+
+      const intervalId = setInterval(() => {
+        const currentDate = new Date;
+        const currentDateInMs = currentDate.getTime();
+        let deltaOfDatesInMs = selectedDateInMs - currentDateInMs;
+    
+        if (deltaOfDatesInMs <= 0) {
+          deltaOfDatesInMs = 0;
+          clearInterval(intervalId)
+        }
+    
+        const { days, hours, minutes, seconds } = convertMs(deltaOfDatesInMs);
+        
+        timerDate.textContent = addLeadingZero(days);
+        timerHours.textContent = addLeadingZero(hours);
+        timerMinutes.textContent = addLeadingZero(minutes);
+        timerSeconds.textContent = addLeadingZero(seconds);
+      }, 1000)
+    }
+  
+    timerStartBtn.addEventListener('click', startTimer)
   },
 };
 
@@ -53,6 +66,10 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
-}
+};
 
+function addLeadingZero(value) {
+  return value.toString().padStart(2, '0')
+};
 
+  
