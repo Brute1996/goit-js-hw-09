@@ -1,0 +1,2 @@
+!function(){var e=document.querySelector(".form");function n(e,n){var t=Math.random()>.3;return new Promise((function(o,a){setTimeout((function(){t?o({position:e,delay:n}):a({position:e,delay:n})}),n)}))}e.addEventListener("submit",(function(t){t.preventDefault();var o=e.elements.delay.value,a=(e.elements.step.value,e.elements.amount.value);n(i,o);for(var u=1;u<=a;u+=1)1===u&&n(u,o)}))}();
+//# sourceMappingURL=03-promises.237eebbe.js.map
