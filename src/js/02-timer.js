@@ -8,6 +8,7 @@ const timerMinutes = document.querySelector('.timer [data-minutes]')
 const timerSeconds = document.querySelector('.timer [data-seconds]')
 const timerStartBtn = document.querySelector('button[data-start]')
 
+
 const options = {
   enableTime: true,
   time_24hr: true,
