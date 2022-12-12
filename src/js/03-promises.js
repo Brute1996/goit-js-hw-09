@@ -5,12 +5,13 @@ form.addEventListener('submit', (e) => {
   e.preventDefault()
   let promiseDelay = parseInt(e.currentTarget.elements.delay.value);
   let promiseStep = parseInt(e.currentTarget.elements.step.value);
-  let amount = parseInt(e.currentTarget.elements.amount.value);
+  let promiseAmount = parseInt(e.currentTarget.elements.amount.value);
 
   
   
-  for (let i = 1; i <= amount; i += 1) {
-    createPromise(i, promiseDelay)
+  for (let position = 1; position <= promiseAmount; position += 1) {
+    
+    createPromise(position, promiseDelay)
     .then(({ position, delay }) => {
       Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
     })
