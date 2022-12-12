@@ -7,9 +7,12 @@ function getRandomHexColor() {
 
 let randomizeBodyColorActivate = true;
 let colorIntervalId = null;
+buttonStop.disabled = true;
 
 buttonStart.addEventListener('click', () => {
-
+    buttonStart.disabled = true;
+    buttonStop.disabled = false;
+    
     if (randomizeBodyColorActivate) {
             colorIntervalId = setInterval(() => {
             document.body.style.backgroundColor = getRandomHexColor();
@@ -20,9 +23,10 @@ buttonStart.addEventListener('click', () => {
 })
 
 buttonStop.addEventListener('click', () => {
+    buttonStop.disabled = true;
+    buttonStart.disabled = false;
 
     clearInterval(colorIntervalId)
-    document.body.style.backgroundColor = '';
     randomizeBodyColorActivate = true
 })
 
