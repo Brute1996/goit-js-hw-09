@@ -45,13 +45,7 @@ const options = {
         timerHours.textContent = addLeadingZero(hours);
         timerMinutes.textContent = addLeadingZero(minutes);
         timerSeconds.textContent = addLeadingZero(seconds);
-      }, 1000)
-      ;
-
-      
-
-      
-
+      }, 1000);
     }
   
     timerStartBtn.addEventListener('click', startTimer)
