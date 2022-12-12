@@ -16,20 +16,24 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDateInMs = selectedDates[0].getTime();
-    
+
+
     if (selectedDateInMs < options.defaultDate.getTime()) {
       Notify.failure('Please choose a date in the future');
       return
     } 
+
     
     const startTimer = () => {
       timerStartBtn.removeEventListener('click', startTimer)
 
       const intervalId = setInterval(() => {
+        
         const currentDate = new Date;
+        
         const currentDateInMs = currentDate.getTime();
         let deltaOfDatesInMs = selectedDateInMs - currentDateInMs;
-    
+        
         if (deltaOfDatesInMs <= 0) {
           deltaOfDatesInMs = 0;
           clearInterval(intervalId)
@@ -42,6 +46,12 @@ const options = {
         timerMinutes.textContent = addLeadingZero(minutes);
         timerSeconds.textContent = addLeadingZero(seconds);
       }, 1000)
+      ;
+
+      
+
+      
+
     }
   
     timerStartBtn.addEventListener('click', startTimer)
